@@ -58,7 +58,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
           children: [
             AppTextField(
               controller: mSearch,
-              textFieldType: TextFieldType.OTHER,
+              textFieldType: TextFieldType.oTHER,
               isValidationRequired: false,
               autoFocus: false,
 

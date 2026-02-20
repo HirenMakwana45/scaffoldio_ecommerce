@@ -84,7 +84,7 @@ class _LeaveReviewScreenState extends State<LeaveReviewScreen> {
               maxLines: 4,
               minLines: 4,
               controller: reviewCont,
-              textFieldType: TextFieldType.OTHER,
+              textFieldType: TextFieldType.oTHER,
               isValidationRequired: true,
               // focus: mEmailFocus,
               // nextFocus: mLastNameFocus,

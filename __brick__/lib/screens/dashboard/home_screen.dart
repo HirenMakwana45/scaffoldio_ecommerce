@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 AppTextField(
                   controller: mSearch,
-                  textFieldType: TextFieldType.OTHER,
+                  textFieldType: TextFieldType.oTHER,
                   isValidationRequired: false,
                   autoFocus: false,
 

@@ -55,7 +55,7 @@ class _EnterLocationScreenState extends State<EnterLocationScreen> {
           children: [
             AppTextField(
               controller: mSearch,
-              textFieldType: TextFieldType.OTHER,
+              textFieldType: TextFieldType.oTHER,
               isValidationRequired: false,
               autoFocus: false,
 

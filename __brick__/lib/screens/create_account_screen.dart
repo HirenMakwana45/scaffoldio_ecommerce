@@ -95,7 +95,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   4.height,
                   AppTextField(
                     controller: mNameCont,
-                    textFieldType: TextFieldType.NAME,
+                    textFieldType: TextFieldType.nAME,
                     isValidationRequired: true,
                     focus: mNameFocus,
                     nextFocus: mEmailFocus,
@@ -123,7 +123,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
                   AppTextField(
                     controller: mEmailCont,
-                    textFieldType: TextFieldType.EMAIL,
+                    textFieldType: TextFieldType.eMAIL,
                     isValidationRequired: true,
                     focus: mEmailFocus,
                     nextFocus: mPassFocus,
@@ -152,7 +152,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     controller: mPassCont,
                     focus: mPassFocus,
                     // nextFocus: mPassFocus,
-                    textFieldType: TextFieldType.PASSWORD,
+                    textFieldType: TextFieldType.pASSWORD,
                     keyboardType: TextInputType.visiblePassword,
                     decoration: defaultInputDecoration(
                       context,

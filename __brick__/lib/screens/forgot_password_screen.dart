@@ -97,7 +97,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     controller: mPassCont,
                     focus: mPassFocus,
                     // nextFocus: mPassFocus,
-                    textFieldType: TextFieldType.PASSWORD,
+                    textFieldType: TextFieldType.pASSWORD,
                     keyboardType: TextInputType.visiblePassword,
                     decoration: defaultInputDecoration(
                       context,
@@ -127,7 +127,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     controller: mConfirmPassCont,
                     focus: mConfirmPassFocus,
                     // nextFocus: mPassFocus,
-                    textFieldType: TextFieldType.PASSWORD,
+                    textFieldType: TextFieldType.pASSWORD,
                     keyboardType: TextInputType.visiblePassword,
                     decoration: defaultInputDecoration(
                       context,

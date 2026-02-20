@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   4.height,
                   AppTextField(
                     controller: mEmailCont,
-                    textFieldType: TextFieldType.EMAIL,
+                    textFieldType: TextFieldType.eMAIL,
                     isValidationRequired: true,
                     focus: mEmailFocus,
                     // nextFocus: mLastNameFocus,
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: mPassCont,
                     focus: mPassFocus,
                     // nextFocus: mPassFocus,
-                    textFieldType: TextFieldType.PASSWORD,
+                    textFieldType: TextFieldType.pASSWORD,
                     keyboardType: TextInputType.visiblePassword,
                     decoration: defaultInputDecoration(
                       context,

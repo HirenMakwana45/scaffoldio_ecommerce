@@ -37,7 +37,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
             controller: mPassCont,
             focus: mPassFocus,
             // nextFocus: mPassFocus,
-            textFieldType: TextFieldType.PASSWORD,
+            textFieldType: TextFieldType.pASSWORD,
             keyboardType: TextInputType.visiblePassword,
             decoration: defaultInputDecoration(
               context,
@@ -73,7 +73,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
             controller: mPassCont,
             focus: mPassFocus,
             // nextFocus: mPassFocus,
-            textFieldType: TextFieldType.PASSWORD,
+            textFieldType: TextFieldType.pASSWORD,
             keyboardType: TextInputType.visiblePassword,
             decoration: defaultInputDecoration(
               context,
@@ -95,7 +95,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
             controller: mPassCont,
             focus: mPassFocus,
             // nextFocus: mPassFocus,
-            textFieldType: TextFieldType.PASSWORD,
+            textFieldType: TextFieldType.pASSWORD,
             keyboardType: TextInputType.visiblePassword,
             decoration: defaultInputDecoration(
               context,

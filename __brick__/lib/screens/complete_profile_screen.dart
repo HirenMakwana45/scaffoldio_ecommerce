@@ -67,7 +67,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               4.height,
               AppTextField(
                 controller: mNameCont,
-                textFieldType: TextFieldType.NAME,
+                textFieldType: TextFieldType.nAME,
                 isValidationRequired: true,
                 focus: mNameFocus,
                 // nextFocus: mEmailFocus,
@@ -92,7 +92,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               AppTextField(
                 // focus: _focusNode,
                 controller: mMobileCont,
-                textFieldType: TextFieldType.PHONE,
+                textFieldType: TextFieldType.pHONE,
                 // maxLength: 10,
                 isValidationRequired: true,
                 inputFormatters: [
