@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kapda/extensions/extension_util/bool_extensions.dart';
-import 'package:kapda/extensions/extension_util/string_extensions.dart';
+import 'package:{{name.snakeCase()}}/extensions/extension_util/bool_extensions.dart';
+import 'package:{{name.snakeCase()}}/extensions/extension_util/string_extensions.dart';
 import 'colors.dart';
 import 'common.dart';
 
