@@ -1,0 +1,420 @@
+import 'dart:async';
+
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:{{name.snakeCase()}}/extensions/extension_util/context_extensions.dart';
+import 'package:{{name.snakeCase()}}/extensions/extension_util/int_extensions.dart';
+import 'package:{{name.snakeCase()}}/extensions/extension_util/widget_extensions.dart';
+// import 'package:{{name.snakeCase()}}/screens/dashboard/dashboard_screen.dart';
+import 'package:lottie/lottie.dart';
+import 'package:toastification/toastification.dart';
+// import 'package:telephony/telephony.dart';
+// import 'package:telephony/telephony.dart';
+
+import '../../Utils/app_colors.dart';
+// import '../../Utils/app_common.dart';
+import '../../Utils/app_constants.dart';
+import '../../extensions/app_button.dart';
+import '../../extensions/common.dart';
+import '../../extensions/loader_widget.dart';
+import '../../extensions/otp_text_field.dart';
+import '../../extensions/shared_pref.dart';
+import '../../extensions/text_styles.dart';
+import '../../extensions/widgets.dart';
+import '../../main.dart';
+import '../services/firebase_service.dart';
+import '../utils/app_common.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../utils/app_images.dart';
+
+class OtpScreen extends StatefulWidget {
+  final String mobileNumber;
+  final String? verificationId;
+
+  const OtpScreen({required this.mobileNumber, this.verificationId, super.key});
+
+  @override
+  State<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends State<OtpScreen> with TickerProviderStateMixin {
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  GlobalKey<OTPTextFieldState> otpTextFieldKey = GlobalKey<OTPTextFieldState>();
+  // final FirebaseService _firebaseService = FirebaseService();
+
+  // final TextEditingController _otpController = TextEditingController();
+
+  // Telephony telephony = Telephony.instance;
+
+  String otpCode = '';
+  int _start = 60;
+  bool _canResendOTP = false;
+  Timer? _timer;
+  bool isResend = false;
+  String resendVerificationId = '';
+  String? appSignature;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {
+    // requestSmsPermissions();
+    appStore.setLoading(false);
+    startTimer();
+
+    // telephony.listenIncomingSms(
+    //   onNewMessage: (SmsMessage message) {
+    //     String sms = message.body.toString();
+    //
+    //     if (message.body!.contains('yourFirebaseProjectName.firebaseapp.com')) {
+    //       String otpcode = sms.replaceAll(RegExp(r'[^0-9]'), '');
+    //       // _otpController.set(otpcode.split(""));
+    //       Future.delayed(Duration(milliseconds: 100), () {
+    //         otpTextFieldKey.currentState?.updateOTP(otpcode);
+    //       });
+    //       setState(() {
+    //         // refresh UI
+    //       });
+    //     } else {}
+    //   },
+    //   listenInBackground: false,
+    // );
+    // Start listening for SMS code
+    setState(() {});
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
+  void startTimer() {
+    _start = 60;
+    _canResendOTP = false;
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_start > 0) {
+        _start--;
+        if (mounted) {
+          setState(() {});
+        }
+      } else {
+        timer.cancel();
+        if (mounted) {
+          setState(() {
+            _canResendOTP = true;
+          });
+        }
+      }
+    });
+  }
+
+  void resendOtpFunction() {
+    if (_canResendOTP) {
+      isResend = true;
+      // reSendOTP();
+      startTimer();
+    } else {
+      showToast(
+        'You cannot resend OTP yet. Please wait.',
+        type: ToastificationType.warning,
+        progressColor: primaryColor,
+      );
+      // toast('You cannot resend OTP yet. Please wait.');
+    }
+  }
+
+  // Future<void> resendOTP(
+  //   BuildContext context,
+  //   String phoneNumber,
+  //   String mobileNo,
+  // ) async {
+  //   return await _auth.verifyPhoneNumber(
+  //     phoneNumber: phoneNumber,
+  //     verificationCompleted: (PhoneAuthCredential credential) async {},
+  //     verificationFailed: (FirebaseAuthException e) {
+  //       appStore.setLoading(false);
+  //       if (e.code == 'invalid-phone-number') {
+  //         showToast(
+  //           'The provided Phone number is not valid.',
+  //           type: ToastificationType.error,
+  //           progressColor: primaryColor,
+  //         );
+  //         // toast('The provided Phone number is not valid.');
+  //         throw 'The provided Phone number is not valid.';
+  //       } else {
+  //         showToast(
+  //           e.toString(),
+  //           type: ToastificationType.error,
+  //           progressColor: primaryColor,
+  //         );
+  //         // toast(e.toString());
+  //         throw e.toString();
+  //       }
+  //     },
+  //     timeout: Duration(minutes: 1),
+  //     codeSent: (String verificationId, int? resendToken) async {
+  //       resendVerificationId = verificationId;
+  //     },
+  //     codeAutoRetrievalTimeout: (String verificationId) {
+  //       //
+  //     },
+  //   );
+  // }
+
+  // Future<void> reSendOTP({bool isResend = false}) async {
+  //   hideKeyboard(context);
+  //   // appStore.setLoading(true);
+  //
+  //   String number = widget.mobileNumber.toString();
+  //
+  //   await resendOTP(
+  //     context,
+  //     number,
+  //     widget.mobileNumber,
+  //   ).then((value) {}).catchError((e) {
+  //     showToast(
+  //       e.toString(),
+  //       type: ToastificationType.error,
+  //       progressColor: primaryColor,
+  //     );
+  //     // toast(e.toString());
+  //     appStore.setLoading(false);
+  //   });
+  // }
+
+  // Future<void> submit() async {
+  //   hideKeyboard(context);
+  //   appStore.setLoading(true);
+  //
+  //   AuthCredential credential = PhoneAuthProvider.credential(
+  //     verificationId: isResend ? resendVerificationId : widget.verificationId!,
+  //     smsCode: otpCode,
+  //   );
+  //
+  //   try {
+  //     await FirebaseAuth.instance.signInWithCredential(credential);
+  //
+  //     print("YES OTP VERIFICATION COMPLETED");
+  //     Future<bool> isDeviceAlreadyUsed() async {
+  //       final deviceId =
+  //           (await _firebaseService.getDeviceId()).trim().toLowerCase();
+  //       final query =
+  //           await FirebaseFirestore.instance
+  //               .collection('Users')
+  //               .where('deviceId', isEqualTo: deviceId)
+  //               .get();
+  //
+  //       return query.docs.isNotEmpty;
+  //     }
+  //
+  //     if (await isDeviceAlreadyUsed()) {
+  //       showToast("You already have an account on this device.");
+  //       return;
+  //     } else {
+  //       await _firebaseService.saveUserIfNew(loginMethod: 'mobile');
+  //     }
+  //
+  //     userStore.setLogin(true);
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (_) => DashboardScreen()),
+  //     );
+  //   } on FirebaseAuthException catch (e) {
+  //     String errorMessage;
+  //     switch (e.code) {
+  //       case 'invalid-verification-code':
+  //         errorMessage = 'Invalid verification code. Please try again.';
+  //         break;
+  //       case 'user-not-found':
+  //         errorMessage = 'No user found with this phone number.';
+  //         break;
+  //       default:
+  //         errorMessage = 'An unknown error occurred. Please try again.';
+  //     }
+  //     showToast(
+  //       errorMessage,
+  //       type: ToastificationType.error,
+  //       progressColor: primaryColor,
+  //     );
+  //   } catch (e) {
+  //     showToast(
+  //       'An error occurred: ${e.toString()}',
+  //       type: ToastificationType.error,
+  //       progressColor: primaryColor,
+  //     );
+  //   } finally {
+  //     appStore.setLoading(false);
+  //   }
+  // }
+
+  Widget otpInputField() {
+    return OTPTextField(
+      key: otpTextFieldKey,
+      pinLength: 6,
+      fieldWidth: context.width() * 0.1,
+      onChanged: (s) {
+        otpCode = s;
+      },
+      onCompleted: (pin) {
+        otpCode = pin;
+        setState(() {});
+      },
+    ).center();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        bool shouldLeave = await showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: Text('Are you sure?'),
+                content: Text(
+                  'Do you want to go back? This will cancel OTP verification.',
+                ),
+                actions: [
+                  TextButton(onPressed: () => pop(false), child: Text('No')),
+                  TextButton(onPressed: () => pop(true), child: Text('Yes')),
+                ],
+              ),
+        );
+        return shouldLeave ?? false;
+      },
+      child: Observer(
+        builder: (context) {
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: appBarWidget('', context: context),
+            body: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      50.height,
+                      Text(
+                        'Enter Verification Code',
+                        style: boldTextStyle(size: 22),
+                      ),
+                      Text(
+                        '${'We have sent you a 6 digit verification code on '} ',
+                        // ''
+                        // '${widget.phoneNumber!}',
+                        style: secondaryTextStyle(color: Colors.grey, size: 12),
+                      ),
+                      6.height,
+                      Text(
+                        widget.mobileNumber!,
+                        style: secondaryTextStyle(
+                          size: 14,
+                          color: Colors.grey,
+                          decoration: TextDecoration.underline,
+                          textDecorationStyle: TextDecorationStyle.solid,
+                        ),
+                      ),
+                      6.height,
+                      Text(
+                        "via SMS",
+                        style: secondaryTextStyle(
+                          size: 14,
+                          color: Colors.grey,
+                          // decoration: TextDecoration.underline,
+                          // textDecorationStyle: TextDecorationStyle.solid,
+                        ),
+                      ),
+                      20.height,
+
+                      // PinFieldAutoFill(
+                      //   codeLength: 6,
+                      //   onCodeChanged: (code) {
+                      //     setState(() {
+                      //       otpCode = code; // Update the 1 code manually if needed
+                      //     });
+                      //   },
+                      // ),
+                      otpInputField(),
+
+                      20.height,
+                      StatefulBuilder(
+                        builder: (context, setState) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "Didn't receive the code?",
+                                style: primaryTextStyle(color: Colors.grey),
+                              ),
+                              GestureDetector(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      _canResendOTP ? 'Resend' : '',
+                                      style: primaryTextStyle(
+                                        color: primaryColor,
+                                      ),
+                                    ).paddingLeft(4),
+                                    if (!_canResendOTP)
+                                      Container(
+                                        width: 120,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '$_start seconds',
+                                          style: primaryTextStyle(
+                                            color: secondaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  if (_canResendOTP) {
+                                    resendOtpFunction();
+                                    setState(() {});
+                                  }
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      90.height,
+                    ],
+                  ).paddingSymmetric(horizontal: 16),
+                ),
+                Observer(
+                  builder: (context) {
+                    return  Lottie.asset(
+                      // frameRate: FrameRate(1),
+                      ic_heart_loader,
+                      fit: BoxFit.fill,
+                    ).center().visible(appStore.isLoading);
+                  },
+                ),
+              ],
+            ),
+            floatingActionButton: AppButton(
+              text: 'Confirm',
+              padding: EdgeInsetsDirectional.all(0),
+              width: context.width() * 0.68,
+              height: context.height() * 0.056,
+              color: primaryColor,
+              onTap: () {
+                // submit();
+              },
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
+        },
+      ),
+    );
+  }
+}

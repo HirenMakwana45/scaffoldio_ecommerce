@@ -1,0 +1,23 @@
+name: scaffoldio_ecommerce
+description: My Fashion App Template (Kapda UI)
+
+# This connects your tool to your GitHub code
+repository: https://github.com/HirenMakwana45/scaffoldio_ecommerce
+
+version: 0.1.0+1
+
+environment:
+  mason: ^0.1.0
+
+# These are the questions ScaffoldIo will ask the user
+vars:
+  name:
+    type: string
+    description: Internal project name (use_snake_case)
+    default: my_new_store
+    prompt: "What is your project's internal name? (e.g., fashion_hub)"
+  storeName:
+    type: string
+    description: The name displayed in the App UI
+    default: Kapda Fashion
+    prompt: "What is the Display Name of the store?"
